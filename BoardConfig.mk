@@ -33,6 +33,7 @@ TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
 
 # Kernel
 TARGET_PREBUILT_KERNEL   := $(LOCAL_PATH)/kernel
+TARGET_PREBUILT_DTB      := $(LOCAL_PATH)/dt.img
 BOARD_KERNEL_CMDLINE     := console=ttyS1,115200n8
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 2048
