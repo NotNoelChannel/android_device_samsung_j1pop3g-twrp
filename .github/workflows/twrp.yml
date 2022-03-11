@@ -36,7 +36,7 @@ jobs:
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-5.1
-        git clone --branch twrp-5.1 --single-branch https://github.com/NotNoelChannel/android_device_samsung_j1pop3g-twrp.git ~/TWRP/device/samsung/j1pop3gjv
+        git clone --branch twrp-5.1 --single-branch https://github.com/J110H-Android/android_device_samsung_j1pop3g.git ~/TWRP/device/samsung/j1pop3g
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -48,7 +48,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch omni_j1pop3gjv-eng
+        lunch omni_j1pop3g-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -56,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/j1pop3gjv/recovery.*
+        path: /home/runner/TWRP/out/target/product/j1pop3g/recovery.*
