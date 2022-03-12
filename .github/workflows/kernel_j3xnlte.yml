@@ -27,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: prebuilt_zImage
-        path: /home/runner/work/android_kernel_samsung_j1pop3g/android_kernel_samsung_j1pop3g/arch/arm/boot/zImage
+        path: /home/runner/work/android_kernel_samsung_j3xnlte/android_kernel_samsung_j3xnlte/arch/arm/boot/zImage
