@@ -48,7 +48,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch omni_j1xlte-eng
+        lunch omni_j1xlte-userdebug
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
