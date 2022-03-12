@@ -1,0 +1,30 @@
+name: Samsung Kernel zImage CI (j3xnlte
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Downloading Kernel source
+      run: |
+        sudo git clone https://github.com/djeman/android_kernel_samsung_sharkls -b cm-13.0
+       
+    - name: Checkout Kernel Source
+      uses: actions/checkout@v2
+
+    - name: Download ARM Toolchain
+      run: |
+        sudo git clone --depth 1 --branch android-4.4.4_r2.0.1 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7 /opt/toolchains/arm-eabi-4.7/
+    - name: Build Kernel
+      run: |
+        make -j$(nproc --all) ARCH=arm CROSS_COMPILE=/opt/toolchains/arm-eabi-4.7/bin/arm-eabi- mrproper
+        make -j$(nproc --all) ARCH=arm CROSS_COMPILE=/opt/toolchains/arm-eabi-4.7/bin/arm-eabi- teamwin_j1pop3g_defconfig
+        make -j$(nproc --all) ARCH=arm CROSS_COMPILE=/opt/toolchains/arm-eabi-4.7/bin/arm-eabi- zImage
+    - name: Upload zImage as Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: prebuilt_zImage
+        path: /home/runner/work/android_kernel_samsung_j1pop3g/android_kernel_samsung_j1pop3g/arch/arm/boot/zImage
