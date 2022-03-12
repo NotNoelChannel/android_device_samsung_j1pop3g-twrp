@@ -1,4 +1,4 @@
-name: TWRP CI (j3xnlte)
+name: TWRP CI (j1xlte)
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
 
     env:
       OEM: samsung
-      DEVICE: j3xnlte
+      DEVICE: j1xlte
 
     steps:
     - uses: actions/checkout@v2
@@ -35,8 +35,8 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-5.1
-        git clone --branch twrp-5.1 --single-branch https://github.com/NotNoelChannel/twrp_device_samsung_j3xnlte.git ~/TWRP/device/samsung/j3xnlte
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-7.1
+        git clone --branch twrp-7.1 --single-branch https://github.com/ciyanogen/android_device_samsung_j1xlte.git ~/TWRP/device/samsung/j1xlte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -48,7 +48,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch omni_j3xnlte-eng
+        lunch omni_j1xlte-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -56,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/j3xnlte/recovery.*
+        path: /home/runner/TWRP/out/target/product/j1xlte/recovery.*
