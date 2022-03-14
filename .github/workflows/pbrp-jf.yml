@@ -35,8 +35,8 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_7.1
-        git clone --branch android-8.1 --single-branch https://github.com/TeamWin/android_device_samsung_a3xelte.git ~/TWRP/device/samsung/a3xelte
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/RedWolfRecovery/rw_manifest.git -b rw-n
+        git clone --branch android-7.1 --single-branch https://github.com/TeamWin/android_device_samsung_jflte.git ~/TWRP/device/samsung/jflte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -45,12 +45,10 @@ jobs:
         export PATH="$HOME/.jdk_7/java-se-7u75-ri/bin:$PATH"
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
-        git clone https://gitlab.com/OrangeFox/misc/theme.git bootable/recovery/gui/theme
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
         export LC_ALL=C
-        lunch omni_a3xelte-eng
+        lunch omni_jflte-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
