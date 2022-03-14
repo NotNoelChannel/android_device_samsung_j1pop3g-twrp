@@ -1,4 +1,4 @@
-name: PBRP CI (a3xelte)
+name: RWRP CI (a3xelte)
 
 on:
   workflow_dispatch:
@@ -56,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/a3xelte/recovery.*
+        path: /home/runner/TWRP/out/target/product/jflte/recovery.*
