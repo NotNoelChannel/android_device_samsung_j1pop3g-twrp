@@ -1,4 +1,4 @@
-name: TWRP CI (a3xelte)
+name: TWRP CI (a5xelte)
 
 on:
   workflow_dispatch:
