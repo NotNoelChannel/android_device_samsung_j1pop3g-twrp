@@ -56,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/grandprimevelte/recovery.*
+        path: /home/runner/TWRP/out/target/product/eagle/recovery.*
