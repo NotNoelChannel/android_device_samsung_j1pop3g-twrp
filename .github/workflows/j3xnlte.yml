@@ -35,11 +35,8 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_lineageos.git -b twrp-14.1
-        git clone --branch cm-14.1 --single-branch https://github.com/f2065/device-sony-yukon.git ~/TWRP/device/sony/yukon
-        git clone --branch cm-14.1-twrp --single-branch https://github.com/f2065/device-sony-eagle.git ~/TWRP/device/sony/eagle
-        git clone --branch cm-14.1 --single-branch https://github.com/f2065/vendor-yukon.git ~/TWRP/vendor/sony/
-        git clone --branch cm-14.1 --single-branch https://github.com/f2065/android_kernel_sony_msm8226.git ~/TWRP/kernel/sony/msm8226
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
+        git clone --branch android-9.0 --single-branch https://github.com/TeamWin/android_device_samsung_beyond0lte.git ~/TWRP/device/samsung/beyond0lte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -51,7 +48,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch lineage_eagle-userdebug
+        lunch omni_beyond0lte-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -59,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/eagle/recovery.*
+        path: /home/runner/TWRP/out/target/product/beyond0lte/recovery.*
