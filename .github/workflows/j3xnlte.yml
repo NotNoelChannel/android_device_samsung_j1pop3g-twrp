@@ -1,4 +1,4 @@
-name: TWRP CI (kylevess)
+name: TWRP CI (y560)
 
 on:
   workflow_dispatch:
