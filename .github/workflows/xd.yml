@@ -53,6 +53,10 @@ jobs:
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
+    - name: CD to out/target
+      run: |
+        cd /home/runner/TWRP/out/target/product/j1pop3g
+        ls
     - name: Uploading TWRP builds
       uses: actions/upload-artifact@v2
       with:
