@@ -1,4 +1,4 @@
-name: TWRP CI
+name: LineageOS Recovery CI
 
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
         axel -q -n $(nproc --all) https://download.java.net/openjdk/jdk7u75/ri/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
         tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
         sudo ln -f -s /usr/bin/python2.7 /usr/bin/python
-    - name: Syncing TWRP sources
+    - name: Syncing LineageOS sources
       run: |
         mkdir ~/TWRP
         cd ~/TWRP
@@ -39,7 +39,7 @@ jobs:
         git clone --branch cm-12.1 --single-branch https://github.com/J110H-Android/android_device_samsung_j1pop3g.git ~/TWRP/device/samsung/j1pop3g
         git clone https://github.com/J110H-Android/android_kernel_samsung_j1pop3g.git ~/TWRP/kernel/samsung/j1pop3g
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
-    - name: Building TWRP
+    - name: Building Lineage Recovery
       run: |
         OLDPATH=$PATH
         OLDJAVAHOME=$JAVA_HOME
@@ -53,11 +53,7 @@ jobs:
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
-    - name: CD to out/target
-      run: |
-        cd /home/runner/TWRP/out/target/product/j1pop3g
-        ls
-    - name: Uploading TWRP builds
+    - name: Uploading LineageRecovery builds
       uses: actions/upload-artifact@v2
       with:
         name: twrp
