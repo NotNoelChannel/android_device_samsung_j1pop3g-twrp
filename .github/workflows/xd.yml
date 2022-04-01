@@ -50,7 +50,7 @@ jobs:
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
         lunch cm_j1pop3g-eng
-        make -j$(nproc --all) otapackage
+        make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: CD to out/target
@@ -61,4 +61,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/j1pop3g/lineage-11-20220330-UNOFFICIAL-j1pop3g.zip
+        path: /home/runner/TWRP/out/target/product/j1pop3g/recovery.img
