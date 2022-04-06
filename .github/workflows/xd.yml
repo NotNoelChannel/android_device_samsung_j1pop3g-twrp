@@ -35,9 +35,9 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-12.1
-        git clone https://github.com/CyanogenMod/android_device_asus_grouper -b cm-12.1 device/asus/grouper
-        git clone https://github.com/CyanogenMod/android_kernel_asus_grouper -b cm-12.1 kernel/asus/grouper
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-11.0
+        git clone https://github.com/CyanogenMod/android_device_asus_grouper -b cm-11.0 device/asus/grouper
+        git clone https://github.com/CyanogenMod/android_kernel_asus_grouper -b cm-11.0 kernel/asus/grouper
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
