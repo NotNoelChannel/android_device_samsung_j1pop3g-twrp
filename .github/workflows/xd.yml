@@ -37,7 +37,7 @@ jobs:
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-11.0
         git clone https://github.com/NotNoelChannel/android_device_samsung_j1pop3g -b cm-11.0 device/samsung/j1pop3g
-        git clone https://github.com/J110H-Android/android_kernel_samsung_j1pop3g -b cm-11.0 kernel/samsung/j1pop3g
+        git clone https://github.com/J110H-Android/android_kernel_samsung_j1pop3g kernel/samsung/j1pop3g
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
