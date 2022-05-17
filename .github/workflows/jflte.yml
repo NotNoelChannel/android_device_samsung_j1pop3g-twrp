@@ -35,9 +35,8 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_7.1
-        git clone --branch custom-twrp-9.0 --single-branch https://github.com/JDCTeam/android_device_samsung_jflte.git ~/TWRP/device/samsung/jflte
-        git clone --branch lineage-16.0 --single-branch https://github.com/TWRP-resurrection/android_kernel_samsung_jf.git ~/TWRP/kernel/samsung/jf
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-5.1
+        git clone --branch android-7.1 --single-branch https://github.com/TeamWin/android_device_samsung_jflte.git ~/TWRP/device/samsung/jflte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -46,11 +45,8 @@ jobs:
         export PATH="$HOME/.jdk_7/java-se-7u75-ri/bin:$PATH"
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
-        git clone https://gitlab.com/OrangeFox/misc/theme.git bootable/recovery/gui/theme
         source build/envsetup.sh
-        export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
         export ALLOW_MISSING_DEPENDENCIES=true
-        export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
         export LC_ALL=C
         lunch omni_jflte-eng
         make -j$(nproc --all) recoveryimage
