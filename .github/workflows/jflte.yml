@@ -35,7 +35,8 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/NotNoelChannel/android -b cm-12.0
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-5.1
+        git clone https://github.com/TeamWin/android_device_samsung_jflte -b android-7.1 ~/TWRP/device/samsung/jflte
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building TWRP
       run: |
@@ -47,12 +48,12 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_jflte-eng
-        make -j$(nproc --all) recoveryimage
+        lunch omni_jflte-eng
+        mka recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: Uploading TWRP builds
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/jfltexx/recovery.*
+        path: /home/runner/TWRP/out/target/product/jflte/recovery.*
