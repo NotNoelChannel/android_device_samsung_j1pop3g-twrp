@@ -36,8 +36,11 @@ jobs:
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-11.0
-        git clone https://github.com/NotNoelChannel/android_device_samsung_j1pop3g -b cm-11.0 device/samsung/j1pop3g
-        git clone https://github.com/J110H-Android/android_kernel_samsung_j1pop3g kernel/samsung/j1pop3g
+        git clone https://github.com/CyanogenMod/android_device_samsung_jflte -b cm-11.0 device/samsung/jflte
+        git clone https://github.com/CyanogenMod/android_device_samsung_jf-common -b cm-11.0 device/samsung/jf-common
+        git clone https://github.com/CyanogenMod/android_device_samsung_qcom-common -b cm-11.0 device/samsung/qcom-common
+        git clone https://github.com/CyanogenMod/android_hardware_samsung -b cm-11.0 hardware/samsung
+        git clone https://github.com/CyanogenMod/android_kernel_samsung_jf -b cm-11.0 kernel/samsung/jf
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
@@ -49,12 +52,12 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_j1pop3g-eng
-        make -j$(nproc --all) bootimage
+        lunch cm_jflte-eng
+        make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: Uploading LineageRecovery builds
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/j1pop3g/boot.img
+        path: /home/runner/TWRP/out/target/product/jflte/recovery.img
