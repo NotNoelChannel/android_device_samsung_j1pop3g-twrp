@@ -36,7 +36,7 @@ jobs:
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
         python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-12.0
-        git clone https://github.com/CyanogenMod/android_device_samsung_jflte -b cm-12.0 device/samsung/jflte
+        git clone https://github.com/LineageOS/android_device_samsung_jfltexx -b cm-12.0 device/samsung/jfltexx
         git clone https://github.com/CyanogenMod/android_device_samsung_jf-common -b cm-12.0 device/samsung/jf-common
         git clone https://github.com/CyanogenMod/android_device_samsung_qcom-common -b cm-12.0 device/samsung/qcom-common
         git clone https://github.com/CyanogenMod/android_hardware_samsung -b cm-12.0 hardware/samsung
@@ -54,7 +54,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_jflte-eng
+        lunch cm_jfltexx-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -62,4 +62,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/jflte/recovery.img
+        path: /home/runner/TWRP/out/target/product/jfltexx/recovery.img
