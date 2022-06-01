@@ -35,12 +35,12 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-12.1
-        git clone https://github.com/CyanogenMod/android_device_samsung_jflte -b cm-12.1 device/samsung/jflte
-        git clone https://github.com/CyanogenMod/android_device_samsung_jf-common -b cm-12.1 device/samsung/jf-common
-        git clone https://github.com/CyanogenMod/android_device_samsung_qcom-common -b cm-12.1 device/samsung/qcom-common
-        git clone https://github.com/CyanogenMod/android_hardware_samsung -b cm-12.1 hardware/samsung
-        git clone https://github.com/CyanogenMod/android_kernel_samsung_jf -b cm-12.1 kernel/samsung/jf
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-12.0
+        git clone https://github.com/CyanogenMod/android_device_samsung_jflte -b cm-12.0 device/samsung/jflte
+        git clone https://github.com/CyanogenMod/android_device_samsung_jf-common -b cm-12.0 device/samsung/jf-common
+        git clone https://github.com/CyanogenMod/android_device_samsung_qcom-common -b cm-12.0 device/samsung/qcom-common
+        git clone https://github.com/CyanogenMod/android_hardware_samsung -b cm-12.0 hardware/samsung
+        git clone https://github.com/CyanogenMod/android_kernel_samsung_jf -b cm-12.0 kernel/samsung/jf
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
