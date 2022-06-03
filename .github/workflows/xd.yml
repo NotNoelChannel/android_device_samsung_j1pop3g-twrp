@@ -26,8 +26,8 @@ jobs:
           libgl1-mesa-dev libxml2-utils xsltproc schedtool axel
         mkdir ~/.jdk_7
         cd ~/.jdk_7
-        axel -q -n $(nproc --all) https://download.java.net/openjdk/jdk7u75/ri/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
-        tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
+        axel -q -n $(nproc --all) https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz
+        tar -xzf jdk-8u202-linux-x64.tar.gz
         sudo ln -f -s /usr/bin/python2.7 /usr/bin/python
     - name: Syncing LineageOS sources
       run: |
@@ -35,15 +35,7 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android.git -b cm-13.0
-        git clone https://github.com/CyanogenMod/android_device_samsung_jfltexx -b cm-13.0 device/samsung/jfltexx
-        git clone https://github.com/CyanogenMod/android_device_samsung_jf-common -b cm-13.0 device/samsung/jf-common
-        git clone https://github.com/CyanogenMod/android_device_samsung_qcom-common -b cm-13.0 device/samsung/qcom-common
-        git clone https://github.com/CyanogenMod/android_hardware_samsung -b cm-13.0 hardware/samsung
-        git clone https://github.com/CyanogenMod/android_kernel_samsung_jf -b cm-13.0 kernel/samsung/jf
-        python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
-        rm -rf ~/TWRP/build
-        git clone https://github.com/NotNoelChannel/android_build -b cm-13.0 ~/TWRP/build
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/JDCTeam/manifests.git -b opt-cm-15.0
     - name: Building Lineage Recovery
       run: |
         OLDPATH=$PATH
@@ -54,7 +46,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_jfltexx-eng
+        lunch lineage_jflte-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -62,4 +54,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/jfltexx/recovery.img
+        path: /home/runner/TWRP/out/target/product/jflte/recovery.img
