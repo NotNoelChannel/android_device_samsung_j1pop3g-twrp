@@ -33,10 +33,10 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/LineageOS/android -b cm-13.0
-        git clone https://github.com/SiniTurk/android_device_samsung_cs02 -b cm-13.0 ~/TWRP/device/samsung/cs02
-        git clone https://github.com/SiniTurk/android_kernel_samsung_cs02 -b cm-13.0 ~/TWRP/kernel/samsung/cs02
-        git clone https://github.com/SiniTurk/android_vendor_samsung_cs02 -b cm-13.0 ~/TWRP/vendor/samsung/cs02
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android -b cm-12.1
+        git clone https://github.com/unlegacy-devices/android_device_samsung_j1pop3g -b cm-12.1 ~/TWRP/device/samsung/j1pop3g
+        git clone https://github.com/J110H-Android/android_vendor_samsung_j1pop3g -b cm-11.0 ~/TWRP/vendor/samsung/j1pop3g
+        git clone https://github.com/J110H-Android/android_kernel_samsung_j1pop3g ~/TWRP/kernel/samsung/j1pop3g
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
@@ -46,11 +46,11 @@ jobs:
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
         rm -rf ~/TWRP/build
-        git clone https://github.com/NotNoelChannel/android_build -b cm-13.0 ~/TWRP/build
+        git clone https://github.com/NotNoelChannel/android_build -b cm-12.1 ~/TWRP/build
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch lineage_cs02-eng
+        lunch cm_j1pop3g-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -58,4 +58,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/cs02/recovery.img
+        path: /home/runner/TWRP/out/target/product/j1pop3g/recovery.img
