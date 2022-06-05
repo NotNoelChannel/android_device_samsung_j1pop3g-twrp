@@ -33,13 +33,7 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/unlegacy-devices/android -b cm-12.0
-        git clone https://github.com/androidarmv6/android_device_samsung_bcm21553-common -b cm-12.0 ~/TWRP/device/samsung/bcm21553-common
-        git clone https://github.com/androidarmv6/android_vendor_samsung -b cm-12.0 ~/TWRP/vendor/samsung
-        git clone https://github.com/androidarmv6/android_kernel_samsung_bcm21553-common -b cm-12.0 ~/TWRP/kernel/samsung/bcm21553-common
-        git clone https://github.com/androidarmv6/android_hardware_broadcom_fmradio -b cm-12.0 ~/TWRP/hardware/broadcom/fmradio
-        git clone https://github.com/androidarmv6/android_hardware_broadcom_brcm_usrlib -b cm-12.0 ~/TWRP/hardware/broadcom/brcm_usrlib
-        git clone https://github.com/androidarmv6/android_device_samsung_totoro -b cm-12.0 ~/TWRP/device/samsung/totoro
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/Samsung-KYLEPROXX/android -b cm-12.1
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
@@ -49,11 +43,11 @@ jobs:
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
         rm -rf ~/TWRP/build
-        git clone https://github.com/unlegacy-devices/android_build -b cm-12.0 ~/TWRP/build
+        git clone https://github.com/NotNoelChannel/android_build -b cm-12.1 ~/TWRP/build
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_totoro-userdebug
+        lunch cm_kylepro-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -61,4 +55,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/totoro/boot.img
+        path: /home/runner/TWRP/out/target/product/kylepro/recovery.img
