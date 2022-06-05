@@ -48,15 +48,17 @@ jobs:
         export PATH="$HOME/.jdk_7/java-se-7u75-ri/bin:$PATH"
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
+        rm -rf ~/TWRP/build
+        git clone https://github.com/unlegacy-devices/android_build -b cm-12.0 ~/TWRP/build
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
         lunch cm_totoro-userdebug
-        make -j$(nproc --all) recoveryimage
+        make -j$(nproc --all) bootimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: Uploading LineageRecovery builds
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/totoro/recovery.img
+        path: /home/runner/TWRP/out/target/product/totoro/boot.img
