@@ -54,7 +54,7 @@ jobs:
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
         lunch cm_totoro-userdebug
-        make -j$(nproc --all) bootimage
+        make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: Uploading LineageRecovery builds
