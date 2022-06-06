@@ -24,8 +24,23 @@ jobs:
         sudo apt-get install bc axel bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev
         mkdir ~/.jdk_7
         cd ~/.jdk_7
-        axel -q -n $(nproc --all) https://download.java.net/openjdk/jdk7u75/ri/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
-        tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
+        axel -q -n $(nproc --all) https://repo.huaweicloud.com/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
+        chmod +x jdk-6u45-linux-x64.bin
+        ./jdk-6u45-linux-x64.bin
+        sudo update-alternatives --install /usr/bin/javac javac  $PWD/jdk1.6.0_45/bin/javac 2
+        sudo update-alternatives --set javac $PWD/jdk1.6.0_45/bin/javac
+        sudo update-alternatives --install /usr/bin/java java  $PWD/jdk1.6.0_45/bin/java 2
+        sudo update-alternatives --set java $PWD/jdk1.6.0_45/bin/java
+        sudo update-alternatives --install /usr/bin/javaws javaws  $PWD/jdk1.6.0_45/bin/javaws 2
+        sudo update-alternatives --set javaws $PWD/jdk1.6.0_45/bin/javaws
+        sudo update-alternatives --install /usr/bin/javadoc javadoc  $PWD/jdk1.6.0_45/bin/javadoc 2
+        sudo update-alternatives --set javadoc $PWD/jdk1.6.0_45/bin/javadoc
+        sudo update-alternatives --install /usr/bin/javah javah  $PWD/jdk1.6.0_45/bin/javah 2
+        sudo update-alternatives --set javah $PWD/jdk1.6.0_45/bin/javah
+        sudo update-alternatives --install /usr/bin/javap javap  $PWD/jdk1.6.0_45/bin/javap 2
+        sudo update-alternatives --set javap $PWD/jdk1.6.0_45/bin/javap
+        sudo update-alternatives --install /usr/bin/jar jar  $PWD/jdk1.6.0_45/bin/jar 2
+        sudo update-alternatives --set jar $PWD/jdk1.6.0_45/bin/jar
         sudo ln -f -s /usr/bin/python2.7 /usr/bin/python
     - name: Syncing LineageOS sources
       run: |
@@ -33,10 +48,10 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android -b cm-12.1
-        git clone https://github.com/diepquynh/android_device_samsung_core33g -b cm-12.1 ~/TWRP/device/samsung/core33g
-        git clone https://github.com/diepquynh/android_vendor_samsung_core33g -b cm-12.1 ~/TWRP/vendor/samsung/core33g
-        git clone https://github.com/diepquynh/android_kernel_samsung_core33g -b cm-12.1 ~/TWRP/kernel/samsung/core33g
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android -b cm-10.1
+        git clone https://github.com/unlegacy-devices/android_device_samsung_kylepro -b cm-10.1 ~/TWRP/device/samsung/kylepro
+        git clone https://github.com/Samsung-KYLEPROXX/android_vendor_samsung_kyleproxx ~/TWRP/vendor/samsung/kylepro
+        git clone https://github.com/ishantvivek/android_kernel_samsung_kyleproxx -b osrc ~/TWRP/kernel/samsung/kylepro
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
@@ -46,11 +61,11 @@ jobs:
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
         rm -rf ~/TWRP/build
-        git clone https://github.com/NotNoelChannel/android_build -b cm-12.1 ~/TWRP/build
+        git clone https://github.com/NotNoelChannel/android_build -b cm-10.1 ~/TWRP/build
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_core33g-eng
+        lunch cm_kylepro-eng
         make -j$(nproc --all) recoveryimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
@@ -58,4 +73,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/core33g/recovery.img
+        path: /home/runner/TWRP/out/target/product/kylepro/recovery.img
