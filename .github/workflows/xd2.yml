@@ -48,10 +48,12 @@ jobs:
         cd ~/TWRP
         mkdir ~/.bin
         curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        python3 ~/.bin/repo init --depth=1 -u https://github.com/CyanogenMod/android -b cm-10.1
-        git clone https://github.com/unlegacy-devices/android_device_samsung_kylepro -b cm-10.1 ~/TWRP/device/samsung/kylepro
-        git clone https://github.com/Samsung-KYLEPROXX/android_vendor_samsung_kyleproxx ~/TWRP/vendor/samsung/kylepro
-        git clone https://github.com/ishantvivek/android_kernel_samsung_kyleproxx -b osrc ~/TWRP/kernel/samsung/kylepro
+        python3 ~/.bin/repo init --depth=1 -u https://github.com/LineageOS-ARMv6/android -b cm-11.0
+        git clone https://github.com/LineageOS-ARMv6/android_device_samsung_bcm21553-common -b cm-11.0 ~/TWRP/device/samsung/bcm21553-common
+        git clone https://github.com/LineageOS-ARMv6/android_hardware_broadcom_brcm_usrlib -b cm-11.0 ~/TWRP/hardware/broadcom/brcm_usrlib
+        git clone https://github.com/LineageOS-ARMv6/android_hardware_broadcom_fmradio -b cm-11.0 ~/TWRP/hardware/broadcom/fmradio
+        git clone https://github.com/LineageOS-ARMv6/android_kernel_samsung_bcm21553-common -b cm-11.0 ~/TWRP/kernel/samsung/bcm21553-common
+        git clone https://github.com/LineageOS-ARMv6/android_device_samsung_totoro -b cm-11.0 ~/TWRP/device/samsung/totoro
         python3 ~/.bin/repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
     - name: Building Lineage Recovery
       run: |
@@ -61,16 +63,16 @@ jobs:
         export JAVA_HOME="$HOME/.jdk_7/java-se-7u75-ri"
         cd ~/TWRP
         rm -rf ~/TWRP/build
-        git clone https://github.com/NotNoelChannel/android_build -b cm-10.1 ~/TWRP/build
+        git clone https://github.com/unlegacy-devices/android_build-ARMv6 -b cm-11.0 ~/TWRP/build
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         export LC_ALL=C
-        lunch cm_kylepro-eng
-        make -j$(nproc --all) recoveryimage
+        lunch lineage_totoro-eng
+        make -j$(nproc --all) bootimage
         export PATH=$OLDPATH
         export JAVA_HOME=$OLDJAVAHOME
     - name: Uploading LineageRecovery builds
       uses: actions/upload-artifact@v2
       with:
         name: twrp
-        path: /home/runner/TWRP/out/target/product/kylepro/recovery.img
+        path: /home/runner/TWRP/out/target/product/kylepro/boot.img
